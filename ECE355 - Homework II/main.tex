@@ -1,0 +1,173 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}              	% for blackboard bold, etc
+\usepackage{amsthm}                	% better theorem
+\usepackage{mathtools}
+\renewcommand{\baselinestretch}{1.5} 
+
+\title{ECE355 - Homework II}
+\author{Dantas de Lima Melo, Vinícius \\ \small{1001879880}}
+\date{September 2014}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+\setcounter{subsection}{11}
+\subsection{} Given the discrete-time signal \\
+\begin{equation*}
+x[n] = 1 - \sum\limits_{k=3}^{+\infty} \delta[n-1-k]
+\end{equation*}
+We need to find the constants $M$ and $N_{0}$, such that
+\begin{equation}
+x[n] = u[Mn - n_{0}]
+\label{eq:signal112}
+\end{equation}
+Answer: Just for having some idea of how the behaviour of this signal, we can try some values of n:
+\begin{equation*}
+  \begin{array}{lllll}
+    x[0] &=& 1 - \sum\limits_{k=3}^{+\infty} \delta[0- 1-k]&=& 1\\
+    x[1] &=& 1 - \sum\limits_{k=3}^{+\infty} \delta[1- 1-k]&=& 1\\
+    x[2] &=& 1 - \sum\limits_{k=3}^{+\infty} \delta[2- 1-k]&=& 1\\
+    x[3] &=& 1 - \sum\limits_{k=3}^{+\infty} \delta[3- 1-k]&=& 1\\
+    x[4] &=& 1 - \sum\limits_{k=3}^{+\infty} \delta[4- 1-k]&=& 0\\
+    x[5] &=& 1 - \sum\limits_{k=3}^{+\infty} \delta[5- 1-k]&=& 0\\
+  \end{array}
+\end{equation*}
+Otherwise, it is not hard to realize that the part of the signal is $0$ when the second term is $1$, i.e., the Dirac-delta function assumes value 1 in some case, and this just happens when $n \geq 4$ because the sum starts in $k=3$. \\
+We have the definition:
+\begin{equation*}
+u[t] =\left\{ \begin{array}{lll} 1 &,& t \geq 0 \\ 0 &,& t < 0\end{array} \right.
+\end{equation*}
+But this signal is $0$ starting at $4$, it is not $0$ until $4$. So we must reverse it:
+\begin{equation*}
+u[-t] =\left\{ \begin{array}{lll} 1 &,& t < 0 \\ 0 &,& t \geq 0\end{array} \right.
+\end{equation*}
+The signal ends at $3$, so we must time-shift it:
+\begin{equation*}
+u[3-t] =\left\{ \begin{array}{lll} 1 &,& t \leq 3 \\ 0 &,& t > 3\end{array} \right.
+\end{equation*}
+Turning it equal to \ref{eq:signal112}, we have:
+\begin{equation*}
+u[Mn - n_{0}] = u[3-t] = u[-1\cdot t - (-3)]
+\end{equation*}
+Therefore, $M=-1$ and $n_{0}=-3$.
+\subsection{} Given the signal
+\begin{equation*}
+x(t) = \delta(t+2)-\delta(t-2)
+\end{equation*}
+We need to calculate $E_{\infty}$ of the signal
+\begin{equation*}
+y(t) = \int_{-\infty}^{t} x(\tau) d\tau
+\end{equation*}
+First of all, let's calculate y(t):
+\begin{equation*}
+y(t) = \int_{-\infty}^{t} x(\tau) d\tau = \int_{-\infty}^{t} [\delta(\tau+2)-\delta(\tau-2)] d\tau = \int_{-\infty}^{t} \delta(\tau+2)d\tau + \int_{-\infty}^{t}-\delta(\tau-2) d\tau
+\end{equation*}
+Let's define $y_{1} = \int_{-\infty}^{t} \delta(\tau+2)d\tau$ and $y_{2} = \int_{-\infty}^{t}-\delta(\tau-2) d\tau$. Using the definition of the Dirac-delta function, we have the following: \\
+\begin{equation*}
+\begin{array}{cc} y_{1} = \left\{ \begin{array}{lll} 0 &,& t < -2 \\ 1 &,& t > -2\end{array} \right., & y_{2} = \left\{ \begin{array}{lll} 0 &,& t < 2 \\ -1 &,& t > 2\end{array} \right. \end{array}
+\end{equation*}
+\begin{equation*}
+\Rightarrow y(t) = \left\{ \begin{array}{lll} 0 &,& t < -2 \\ 1 &,& -2 < t < 2 \\ 0 &,& t > 2\end{array} \right.
+\end{equation*}
+Note that y(t) is not defined either for $t=-2$ or $t=2$, so we will not consider this points when integrating, we will use just the limits over them. Therefore, we have the the integral over this points is zero. \\
+$E_{\infty}$ of a signal $x(t)$ is defined as $E_{\infty}=\int_{-\infty}^{+\infty} |x(t)|^{2} dt$, for $y(t)$ we have: \\
+\begin{equation*}
+E_{\infty} = \int_{-\infty}^{+\infty} |y(t)|^{2} dt = \int_{-\infty}^{-2} |y(t)|^{2} dt + \int_{-2}^{2} |y(t)|^{2} dt + \int_{2}^{+\infty} |y(t)|^{2} dt
+\end{equation*}
+\begin{equation*}
+\Rightarrow E_{\infty} = \int_{-\infty}^{-2} |0|^{2} dt + \int_{-2}^{2} |1|^{2} dt + \int_{2}^{+\infty} |0|^{2} dt = \int_{-2}^{2} |1|^{2} dt = \int_{-2}^{2} dt = 4
+\end{equation*}
+Therefore, $E_{\infty}=4$.
+\setcounter{subsection}{14}
+\subsection{} Given a system $S$ with input $x[n]$ and output $y[n]$, which consists of a series interconnection of the following systems\\
+\begin{equation*}
+\begin{array}{lllll} S_{1} &:& y_{1}[n] &=& 2x_{1}[n]+4x_{1}[n-1]\\ S_{2} &:& y_{2}[n] &=& x_{2}[n-2]+\frac{1}{2}x_{2}[n-3]\end{array}
+\end{equation*}
+\begin{enumerate}
+\item[(a)] Determine the input-output relationship for system S: \\
+\textbf{Answer:} $x_{1}$ of $S_{1}$ is $x[n]$, and $x_{2}$ of $S_{2}$ is $y_{1}[n]$, while $y_{2}[n]$ is $y[n]$, so we have: \\
+\begin{equation*}
+y[n] = y_{1}[n-2]+\frac{1}{2}y_{1}[n-3] = (2x[n]+4x[n-1])[n-2]+\frac{1}{2}(2x[n]+4x[n-1])[n-3]
+\end{equation*}
+\begin{equation*}
+\Rightarrow y[n] = (2x[n-2]+4x[n-3])+\frac{1}{2}(2x[n-3]+4x[n-4]) = 2x[n-2]+5x[n-3]+2x[n-4]
+\end{equation*}
+Therefore, the input-output relationship for the system $S$ is
+\begin{equation*}
+y[n] = 2x[n-2]+5x[n-3]+2x[n-4]
+\end{equation*}
+\item[(b)] Is the input-output relationship changed if $S_{2}$ comes before $S_{1}$?
+\end{enumerate}
+\textbf{Answer:} Using the same ideas used in (a), but with a reverse order of the systems. Let's call the final output of $y'[n]$:
+\begin{equation*}
+y'[n] = 2y_{2}[n]+4y_{2}[n-1] = 2(x_{2}[n-2]+\frac{1}{2}x_{2}[n-3])[n]+4(x[n-2]+\frac{1}{2}x[n-3])[n-1]
+\end{equation*}
+\begin{equation*}
+\Rightarrow y'[n] = 2(x_{2}[n-2]+\frac{1}{2}x_{2}[n-3])+4(x[n-3]+\frac{1}{2}x[n-4]) = y'[n] = 2x[n-2]+5x[n-3]+2x[n-4]
+\end{equation*}
+Therefore, $y[n]=y'[n]$.
+\setcounter{subsection}{24}
+\subsection{} Determine if the following signals era periodic, if they are, give their fundamental period.
+\begin{enumerate}
+\item[(a)] $x(t) = 3cos(4t+\frac{\pi}{3})$ \\
+$x(t)$ is a signal dependent of a cosine, which is a periodic signal, so $x(t)$ is periodic as well. Its fundamental period is given by $T = \frac{2\pi}{4} = \frac{\pi}{2}$, according to the equation (1.24) of the book.
+\item[(c)] $x(t) = [cos(2t-\frac{\pi}{3})]^{2}$ \\
+$x(t)$ can be expressed as a function of $cos(2t-\frac{\pi}{3})$, which is a periodic signal, so $x(t)$ is periodic as well. Using a trigonometric identity $cos(x)^{2} = \frac{1+cos(2x)}{2}$:
+\begin{equation*}
+x(t) = [cos(2t-\frac{\pi}{3})]^{2} = \frac{1}{2}[1+cos(4t-\frac{2\pi}{3})]
+\end{equation*}
+Using again the equation (1.24), x(t)'s fundamental period is given by $T = \frac{2\pi}{4} = \frac{\pi}{2}$.
+\item[(e)] $x(t) = Ev\{sin(4\pi t)u(t)\}$ \\
+\begin{equation*}
+x(t) = Ev\{sin(4\pi t)u(t)\} = \frac{1}{2}[sin(4\pi t)u(t)+sin(-4\pi t)u(-t)] = \frac{1}{2}[sin(4\pi t)u(t)-sin(4\pi t)u(-t)]
+\end{equation*}
+Because of the unit-step function, we have the signal defined by parts:
+\begin{equation*}
+x(t) = \left\{ \begin{array}{lll} \frac{1}{2}[sin(4\pi t)&,& t > 0 \\ -\frac{1}{2}[sin(4\pi t)&,& t < 0\end{array} \right.
+\end{equation*}
+This signal is not periodic because it is formed by to different signals across $t=0$.
+\item[(f)] $x(t) = \sum\limits_{n=-\infty}^{+\infty} e^{-(2t-n)}u(2t-n)$ \\
+Defining $k = 2t-n$, we have the signal as a sum of infinite functions in the form $e^{-k}u(k)$, so it is not periodic.
+\end{enumerate}
+\subsection{} Determine if the following signals era periodic, if they are, give their fundamental period. \\
+Note that a discrete time signal is periodic if
+\begin{equation*}
+\begin{array}{lll}\Omega = 2\pi \frac{p}{q}&;&p,q \in \mathbb{Z} \end{array}
+\end{equation*}
+Where $\Omega$ is the signal's angular frequency, and $q$ its fundamental period.
+\begin{enumerate}
+\item[(a)] $x[n] = sin(\frac{6\pi}{7}n+1)$ \\
+\begin{equation*}
+\Omega = \frac{6\pi}{7} = 2\pi \cdot \frac{3}{7}
+\end{equation*}
+$x[n]$ has a fundamental period, which is 7.
+\item[(c)] $x[n] = cos(\frac{\pi}{8}n^{2})$ \\
+If $x[n]$ is periodic with a period $N$, then $x[n + N] = x[n]$ $\forall n$.
+\begin{equation*}
+x[n + N] = cos(\frac{\pi}{8}(n+N)^{2}) = cos(\frac{\pi}{8}[n^{2}+2nN+N^{2}])
+\end{equation*}
+Using the initial hypothesis:
+\begin{equation*}
+x[n] = x[n + N] \Rightarrow cos(\frac{\pi}{8}n^{2}) = cos(\frac{\pi}{8}[n^{2}+2nN+N^{2}])
+\end{equation*}
+Knowing that cosine is a periodic function with period $2\pi$, the previous identity gives us that: 
+\begin{equation*}
+\frac{\pi}{8}(2nN+N^{2}) = 2\pi\alpha \Rightarrow N(2n+N) = 16\alpha
+\end{equation*}
+$N$ cannot be a odd number, or we would have a \textit{reductio ad absurdum}, since $16\alpha$ is a even number. A similar situation happens if we take either $N = 2$ or $N=4$ or $N=6$. The smallest possible number is $N=8$, so it is the fundamental period.
+\item[(d)] $x[n] = cos(\frac{\pi}{2}n)cos(\frac{\pi}{4}n)$ \\
+$x[n]$ can be rewritten as
+\begin{equation*}
+x[n] = \frac{1}{2}[cos(\frac{\pi}{4}n) + cos(\frac{3\pi}{4}n)]
+\end{equation*}
+Defining $x_1[n] = \frac{1}{2}cos(\frac{\pi}{4}n)$, and $x_{2}[n] = \frac{1}{2}cos(\frac{3\pi}{4}n)$, we have:
+\begin{equation*}
+\begin{array}{ccc} \Omega_{1} =  \frac{\pi}{4} = 2\pi \cdot \frac{1}{8}&,& \Omega_{2} =  \frac{3\pi}{4} = 2\pi \cdot \frac{3}{8} \end{array}
+\end{equation*}
+Both $x_{1}[n]$ and $x_{2}[n]$ have a fundamental period of $8$ (because $q = 8$, according to the definition). Therefore, $x[n]$'s fundamental period is $8$. 
+\end{enumerate}
+\end{document}

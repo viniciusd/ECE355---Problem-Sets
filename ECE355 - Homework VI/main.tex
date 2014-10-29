@@ -1,0 +1,194 @@
+%\documentclass[tikz,14pt,border=10pt]{standalone}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}              	% for blackboard bold, etc
+\usepackage{amsthm}                	% better theorem
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\renewcommand{\baselinestretch}{1.5} 
+
+
+\usepackage[all]{xy}
+%\usepackage{textcomp}
+%\usetikzlibrary{shapes,arrows}
+\usepackage{tikz}
+\usepackage{pgfplots} 
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+
+\title{ECE355 - Homework VI}
+\author{Dantas de Lima Melo, Vinícius \\ \small{1001879880}}
+\date{October 2014}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{section}{2}
+\section{}
+    \setcounter{subsection}{27}
+    \subsection{} Determine the Fourier series coefficients of the following signals. In addition, plot the magnitude and phase of each set of coefficients $a_{k}$.
+    \begin{enumerate}
+        \item[(a.a)]
+            \begin{equation*}
+                x[n] := \left\{\begin{array}{ll}
+                    \mathcal{U}[n]&\textrm{, } -2 \leq n \leq 5  \\
+                    x[n+7]
+                \end{array}\right.
+            \end{equation*}
+            We have that:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \frac{1}{N}\sum\limits_{0}^{N-1} x[n]e^{-jk\omega_{0}n} = \frac{1}{7}\sum\limits_{0}^{6} x[n]e^{-jk\omega_{0}n} = \frac{1}{7}\sum\limits_{0}^{5} \mathcal{U}[n]e^{-jk\omega_{0}n}\\
+                    \Rightarrow a_{k} = \frac{1}{7}\sum\limits_{0}^{4} e^{-jk\omega_{0}n}  \\
+                \end{array}
+            \end{equation*}
+            For $k = 0$, we have $a_{0} = \frac{5}{7}$. \\
+            Otherwise, let us take a Geometric Series with first term $a_{0}$, a ratio $q$, and $n'$ elements, its sum $S$ may be calculated by:
+            \begin{equation} \label{eq:28a1}
+                \begin{array}{l}
+                    S = \frac{a_{0}-a_{0}q^{n'}}{1-q}   \\
+                \end{array}
+            \end{equation}
+            Using (\ref{eq:28a1}), we have:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \frac{1}{7}\frac{1-e^{-5jk\omega_{0}}}{1-e^{-jk\omega_{0}}} = \frac{1}{7}\frac{e^{-\frac{5}{2}jk\omega_{0}}(e^{\frac{5}{2}jk\omega_{0}}-e^{-\frac{5}{2}jk\omega_{0}})}{e^{-\frac{1}{2}jk\omega_{0}}(e^{\frac{1}{2}jk\omega_{0}}-e^{-\frac{1}{2}jk\omega_{0}})}  \\
+                \end{array}
+            \end{equation*}
+            However, from the Euler's formula:
+            \begin{equation} \label{eq:28a2}
+                \begin{tabular}{l}
+                    $e^{jz} = cos(z) + jsin(z)$  \\
+                    $e^{-jz} = cos(z) - jsin(z)$ \\
+                    \hline
+                    $e^{jz}-e^{-jz} = 2jsin(z)$
+                \end{tabular}
+            \end{equation}
+            Using (\ref{eq:28a2}), we have:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} =  \frac{1}{7}\frac{e^{-\frac{5}{2}jk\omega_{0}}[2jsin(\frac{5}{2}k\omega_{0})]}{e^{-\frac{1}{2}jk\omega_{0}}[2jsin(\frac{1}{2}k\omega_{0})]} = \frac{e}{7}^{-2jk\omega_{0}}\frac{sin(\frac{5}{2}k\omega_{0})}{sin(\frac{1}{2}k\omega_{0})}  \\
+                \end{array}
+            \end{equation*}
+            But we have that $\omega_{0} = \frac{2\pi}{N}$, so:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \left\{ \begin{array}{ll}
+                    \frac{5}{7} &\textrm{, for } k = 0  \\
+                    \frac{e}{7}^{-\frac{5\pi}{7}jk}\frac{sin(\frac{5\pi}{7}k)}{sin(\frac{\pi}{7}k)} &\textrm{, for } k \neq 0 
+                    \end{array} \right.,   \\
+                  
+                \end{array}
+            \end{equation*}
+            \begin{minipage}{\textwidth}
+                \centering \includegraphics[width=4in]{Images/322aa.eps}
+            \end{minipage}
+        \item[(a.b)]
+            \begin{equation*}
+                x[n] := \left\{\begin{array}{ll}
+                    \mathcal{U}[n]&\textrm{, } -2 \leq n \leq 4  \\
+                    x[n+6]
+                \end{array}\right.
+            \end{equation*}
+            We have that:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \frac{1}{N}\sum\limits_{0}^{N-1} x[n]e^{-jk\omega_{0}n} = \frac{1}{6}\sum\limits_{0}^{5} x[n]e^{-jk\omega_{0}n} = \frac{1}{6}\sum\limits_{0}^{3} \mathcal{U}[n]e^{-jk\omega_{0}n}\\
+                    \Rightarrow a_{k} = \frac{1}{6}\sum\limits_{0}^{3} e^{-jk\omega_{0}n}  \\
+                \end{array}
+            \end{equation*}
+            For $k = 0$, we have $a_{0} = \frac{2}{3}$. \\
+            Otherwise, using (\ref{eq:28a1}), we have:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \frac{1}{6}\frac{1-e^{-4jk\omega_{0}}}{1-e^{-jk\omega_{0}}} = \frac{1}{6}\frac{e^{-2jk\omega_{0}}(e^{2jk\omega_{0}}-e^{-2jk\omega_{0}})}{e^{-\frac{1}{2}jk\omega_{0}}(e^{\frac{1}{2}jk\omega_{0}}-e^{-\frac{1}{2}jk\omega_{0}})}  \\
+                \end{array}
+            \end{equation*}
+            Using (\ref{eq:28a2}), we have:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} =  \frac{1}{6}\frac{e^{-2jk\omega_{0}}[2jsin(2k\omega_{0})]}{e^{-\frac{1}{2}jk\omega_{0}}[2jsin(\frac{1}{2}k\omega_{0})]} = \frac{e}{6}^{-\frac{3}{2}jk\omega_{0}}\frac{sin(2k\omega_{0})}{sin(\frac{1}{2}k\omega_{0})}  \\
+                \end{array}
+            \end{equation*}
+            But we have that $\omega_{0} = \frac{2\pi}{N}$, so:
+            \begin{equation*}
+                \begin{array}{l}
+                   a_{k} = \left\{ \begin{array}{ll}
+                    \frac{2}{3} &\textrm{, for } k = 0  \\
+                     \frac{e}{6}^{-\frac{\pi}{2}jk}\frac{sin(\frac{2\pi}{3}k)}{sin(\frac{\pi}{6}k)}  &\textrm{, for } k \neq 0 
+                    \end{array} \right.,   \\
+                \end{array}
+            \end{equation*}
+            \begin{minipage}{\textwidth}
+                \centering
+                \includegraphics[width=4in]{Images/322ab.eps}
+            \end{minipage}
+        \item[(a.c)]
+            \begin{equation*}
+                x[n] := \left\{\begin{array}{ll}
+                    1&\textrm{, } n = 0  \\
+                    2&\textrm{, } n = 1 \textrm{ or } n = 5 \\
+                    -1&\textrm{, } n = 2 \textrm{ or } n = 4  \\
+                    0&\textrm{, } n = 3  \\
+                    x[-n] \\
+                    x[n+6]
+                \end{array}\right.
+            \end{equation*}
+            We have that:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \frac{1}{N}\sum\limits_{0}^{N-1} x[n]e^{-jk\omega_{0}n} = \frac{1}{6}\sum\limits_{0}^{5} x[n]e^{-jk\omega_{0}n} = \frac{1}{6}\sum\limits_{0}^{5} x[n]\left[cos(k\omega_{0}n)-jsin(k\omega_{0}n)\right]\\
+                \end{array}
+            \end{equation*}
+            Since $x[n]$ is even, it will not have any sine component, so:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} =  \frac{1}{6}\sum\limits_{0}^{5} x[n]cos(k\omega_{0}n)  \\
+                    \Rightarrow a_{k} = \frac{1}{6}\left\{ 1 + 2\left[cos(\frac{k\pi}{3})+cos(\frac{5k\pi}{3})\right] -1\left[cos(\frac{2k\pi}{3})+cos(\frac{4k\pi}{3})\right] \right\} \\
+                    \Rightarrow a_{k} = \frac{1}{6}\left\{ 1 + 2\left[cos(\frac{k\pi}{3})+cos(\frac{k\pi}{3})\right] -1\left[cos(\frac{2k\pi}{3})+cos(\frac{2k\pi}{3})\right] \right\} \\
+                    \Rightarrow a_{k} = \frac{1}{6} + \frac{2}{3}cos(\frac{k\pi}{3}) -\frac{1}{3}cos(\frac{2k\pi}{3}) \\
+                \end{array}
+            \end{equation*}
+            \begin{minipage}{\textwidth}
+                \centering
+                \includegraphics[width=4in]{Images/322ac.eps}
+            \end{minipage}
+        \end{enumerate}
+    \subsection{} Given the Fourier series coefficients of the following discrete-time signals, which are periodic with period 4, determine the signal x[n].
+    \begin{enumerate}
+        \item[(a)] 
+        \begin{equation*}
+            x[n]\left\{\begin{array}{ll}
+                 4(\delta[n-1] + \delta[n-7]) + 4j(\delta[n-3] - \delta[n-5])&\textrm{, } 0 < n < 7  \\
+                x[n+8]
+            \end{array}\right.
+        \end{equation*}
+        \item[(c)] 
+        \begin{equation*}
+x[n]\left\{\begin{array}{ll}
+                 1+{(-1)}^{n}+2cos\left(\frac{\pi n}{4}\right)+2cos\left(\frac{3\pi n}{4}\right)&\textrm{, } 0 < n < 7  \\
+                x[n+8]
+            \end{array}\right.
+        \end{equation*}
+        \item[(d)] 
+        \begin{equation*}
+x[n]\left\{\begin{array}{ll}
+                 2+2cos\left(\frac{\pi n}{4}\right)+cos\left(\frac{\pi n}{2}\right)+\frac{1}{2}cos\left(\frac{3\pi n}{4}\right)&\textrm{, } 0 < n < 7  \\
+                x[n+8]
+            \end{array}\right.
+        \end{equation*}
+    \end{enumerate}
+\end{document}

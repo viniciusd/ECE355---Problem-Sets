@@ -1,0 +1,248 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}              	% for blackboard bold, etc
+\usepackage{amsthm}                	% better theorem
+\usepackage{mathtools}
+\renewcommand{\baselinestretch}{1.5} 
+
+\title{ECE355 - Homework III}
+\author{Dantas de Lima Melo, Vinícius \\ \small{1001879880}}
+\date{September 2014}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+\setcounter{subsection}{26}
+\subsection{} Determine which of the following characteristics either hold or do not hold for each system bellow, justify it.
+\begin{enumerate}
+    \item Memoryless
+    \item Time Invariance
+    \item Linearity
+    \item Causality
+    \item Stability
+\end{enumerate}
+
+\begin{enumerate}
+    \item[(b)] $y(t) = cos(3t)x(t)  $
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+                Since the system does not depends on its past, i.e., $\neg y(x(t-a)), \forall a > 0$, it is memoryless.
+            \item[2.] Time Invariance \\
+                If we apply a delay $t_{0}$ to $x(t)$, we will have $x(t-t_{0})$, which generates the output $y(t) = cos(3t)x(t-t_{0})$ but it is different from $y(t-t_{0})$.  
+            \item[3.] Linearity \\ 
+                Taking the input signal $ax(t)$, we have the output signal $cos(3t)ax(t) = a\cdot cos(3t)ax(t) = ay(t)$. \\
+                Taking the input signal $x_{1}(t)+x_{2}(t)$, we have the output signal $cos(3t)[x_{1}(t)+x_{2}(t)] = cos(3t)x_{1}(t)+cos(3t)x_{2}(t) = y_{1}(t)+y_{2}(t)$. \\
+                Therefore, the system is linear.
+            \item[4.] Causality \\
+                Since the system does not depends on its future, i.e., $\neg y(x(t+a)), \forall a > 0$, it is causal.
+            \item[5.] Stability \\
+                Taking a bounded $x(t)$, i.e., $|x(t)| \leq M_{x}$, and applying either the absolute value function or the magnitude function to $y(t)$ (it depends on $y(t)$'s domain):
+                \begin{equation*}
+                |y(t)| \leq |cos(3t)||x(t)| \leq |cos(3t)|M_{x} \leq M_{x} \Rightarrow |y(t)| \leq M_{x}
+                \end{equation*}
+                Taking $M_{x}=M_{y}$, we have that the system is stable.
+        \end{enumerate}
+    \item[(c)] $y(t) = \int_{-\infty}^{2t} x(\tau)d\tau $
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+                Since the integral sum all the values of $x(t)$ until $2t$, the system is not memoryless.
+            \item[2.] Time Invariance \\
+                Taking a signal $x(t-t_{0})$ and $\tau_{0}=t_{0}$, we have the output signal $y'(t) = \int_{-\infty}^{2t} x(\tau-\tau_{0})d\tau$, taking $\mathrm{T} = \tau-\tau_{0}$: $y'(t) = \int_{-\infty}^{2t-t_{0}} x(\mathrm{T})d\mathrm{T}$, which is not equals to $y(t-t_{0}) = \int_{-\infty}^{2(t-t_{0})} x(\tau)d\tau$. Therefore, the system is not time invariant.
+                \item[3.] Linearity \\ 
+                Taking the input signal ax(t), we have the output:
+                \begin{equation*}
+                \int_{-\infty}^{2t} ax(\tau)d\tau = a\int_{-\infty}^{2t} x(\tau)d\tau = ay(t)
+                \end{equation*}
+                Taking the input signal $x_{1}(t)+x_{2}(t)$, we have the output:
+                \begin{equation*}
+                    \int_{-\infty}^{2t} (x_{1}(\tau)+x_{2}(\tau))d\tau = \int_{-\infty}^{2t} x_{1}(\tau)d\tau + \int_{-\infty}^{2t} x_{2}(\tau)d\tau = y_{1}(t)+y_{2}(t)
+                \end{equation*}
+                Therefore, the system is linear.
+                \item[4.] Causality \\
+                Since the the integral sum all the values of $x(t)$ until $2t$, i.e., more than t, the system is not causal.
+                \item[5.] Stability \\
+                For instance, taking the signal $x(t) = \frac{1}{t}$, the integral would not converge for all bounded values of x(t). Therefore, using a counterexample, the system is not stable.
+        \end{enumerate}
+    \item[(f)] $y(t) = x(\frac{t}{3}) $
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+                Since $y(t)$ may depend on the value of $x(t)$ in a time before $t$, the system is not memoryless.
+            \item[2.] Time Invariance \\
+                If we apply a delay $t_{0}$ to $x(t)$, we will have $x(t-t_{0})$, which generates the output $y(t) = x(\frac{t-t_{0}}{3})$. However, if the delay is applied after the system, we have the output $y'(t) = x(\frac{t}{3}-t_{0})$. Therefore, the system is not time invariant.
+            \item[3.] Linearity \\ 
+                Taking the input signal $ax(t)$, we have the output signal $ax(\frac{t}{3}) = ay(t)$. \\
+                Taking the input signal $x_{1}(t)+x_{2}(t)$, we have the output signal $x_{1}(\frac{t}{3})+x_{2}(\frac{t}{3}) = y_{1}(t)+y_{2}(t)$. \\
+                Therefore, the system is linear.
+            \item[4.] Causality \\
+                Since the system depends on its future when $t < 0$ ($t < t/3, \forall t < 0$), it is not causal.
+            \item[5.] Stability \\
+                Taking a bounded $x(t)$, i.e., $|x(t)| \leq M_{x}$, we will have $|y(t)| \leq M_{x} = M_{y}$ as well. Therefore, the system is stable.
+        \end{enumerate}
+    \item[(g)] $y(t) = \frac{d}{dt}x(t)$
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+                Since $y(t)$ cannot be determined using only $x(t)$, it is not memoryless.
+            \item[2.] Time Invariance \\
+                If we apply a delay $t_{0}$ to $x(t)$, we will have $x(t-t_{0})$, which generates the output $y(t) = \frac{d}{dt}x(t-t_{0})$. In addition, if we apply the same delay in an output signal $y'(t)$, we will have the final output $y(t) = \frac{d}{dt}x(t-t_{0})$. Therefore, the system is time invariant.
+            \item[3.] Linearity \\ 
+                Taking the input signal $ax(t)$, we have the output signal $a\frac{d}{dt}x(t) = ay(t)$. \\
+                Taking the input signal $x_{1}(t)+x_{2}(t)$, we have the output signal $\frac{d}{dt}[x_{1}(t)+x_{2}(t)] = \frac{d}{dt}x_{1}(t) + \frac{d}{dt}x_{2}(t) = y_{1}(t)+y_{2}(t)$. \\
+                Therefore, the system is linear.
+            \item[4.] Causality \\
+                Since the system may anticipate its future, it is not causal. Take as example the following signal $x(t)$: 
+                \begin{equation*}
+                x(t) := \left\{\begin{array}{cc}
+                 1,\textrm{ if }x \leq 2  \\
+                 2,\textrm{ if }x > 2 
+                \end{array} \right.
+                \end{equation*}
+                At $t=2$, $y(t)$ will anticipate the discontinuity.
+            \item[5.] Stability \\
+                For instance, taking the signal $x(t) = log(1-x)$, the integral would not converge for all bounded values of x(t). Therefore, using a counterexample, the system is not stable.
+        \end{enumerate}
+\end{enumerate}
+\subsection{} Determine which of the following characteristics either hold or do not hold for each system bellow, justify it.
+\begin{enumerate}
+    \item Memoryless
+    \item Time Invariance
+    \item Linearity
+    \item Causality
+    \item Stability
+\end{enumerate}
+
+\begin{enumerate}
+    \item[(c)] $y[n] = nx[n]$
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+            Since the system depends only on the present, it is memoryless.
+            \item[2.] Time Invariance \\
+                If we apply a delay $n_{0}$ to $x[n]$, we will have $x[n-n_{0}]$, which generates the output $y[n] = nx[n-n_{0}]$. However, if we apply the delay after the system, we will have the final output $y'[n] = (n-n_{0})x[n-n_{0}]$. Therefore, the system is not time invariant.
+            \item[3.] Linearity \\ 
+                Taking the input signal $ax[n]$, we have the output signal $anx[n] = ay[n]$. \\
+                Taking the input signal $x_{1}[n]+x_{2}[n]$, we have the output signal $n[x_{1}[n]+x_{2}[n]] = nx_{1}[n] + nx_{2}[n] = y_{1}[n]+y_{2}[n]$. \\
+                Therefore, the system is linear.
+            \item[4.] Causality \\
+                Since the system cannot anticipate its future, it is causal.
+            \item[5.] Stability \\
+                Taking a bounded $x[n]$, i.e., $|x[n]| \leq M_{x}$, and applying either the absolute value function or the magnitude function to $y[n]$ (it depends on $y[n]$'s domain):
+                \begin{equation*}
+                |y[n]| \leq |n||x[n]| \leq |n|M_{x}
+                \end{equation*}
+                Taking $M_{y}=n\cdot M_{x}$, we have that $y[n]$ is bounded as well. Therefore, the system is stable.
+        \end{enumerate}
+    \item[(d)] $y[n] = Ev\{x[n-1]\} = \frac{1}{2}\{x[n-1]+x[1-n]\}$
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+            Since the system depends on its past, it is not memoryless.
+            \item[2.] Time Invariance \\
+                If we apply a delay $n_{0}$ to $x[n]$, we will have $x[n-n_{0}]$, which generates the output $y[n] = \frac{1}{2}\{x[(n-n_{0})-1]+x[1-(n-n_{0})]\}$. In addition, if we apply the delay after the system, we will have the final output $y'[n] = \frac{1}{2}\{x[(n-n_{0})-1]+x[1-(n-n_{0})]\} = y[n]$. Therefore, the system is time invariant.
+            \item[3.] Linearity \\ 
+                Taking the input signal $ax[n]$, we have the output signal $\frac{1}{2}\{ax[n-1]+ax[1-n]\} = \frac{a}{2}\{x[n-1]+x[1-n]\} = ay[n]$. \\
+                Taking the input signal $x_{1}[n]+x_{2}[n]$, we have the output signal $\frac{1}{2}\{x_{1}[n-1]+x_{2}[n-1]+x_{1}[1-n]+x_{2}[1-n]\} = \frac{1}{2}\{x_{1}[n-1]+x_{1}[1-n]\} + \frac{1}{2}\{x_{2}[n-1]+x_{2}[1-n]\} = y_{1}+y_{2}$. \\
+                Therefore, the system is linear.
+            \item[4.] Causality \\
+                Since the system may anticipate its future if $n<0$, it is not causal.
+            \item[5.] Stability \\
+                foo
+        \end{enumerate}
+    \item[(e)] $y[n] = \left\{ \begin{array}{cl}
+    x[n] &, n\geq 1  \\
+    0 &, n = 0 \\
+    x[n+1] &, n \leq -1
+    \end{array} \right.$
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+            Since the system may depend on its future for $n\leq -1$, it is not memoryless.
+            \item[2.] Time Invariance \\
+                The system is not time invarant, it is easy to see taking $n=0$.
+            \item[3.] Linearity \\ 
+                The system is linear, because each of its pieces is linear.
+            \item[4.] Causality \\
+                Since the system may anticipate its future, it is not causal.
+            \item[5.] Stability \\
+                foo
+        \end{enumerate}
+    \item[(g)] $y[n] = x[4n+1]$
+        \begin{enumerate}
+            \item[1.] Memoryless \\
+            Since the system depends on its future, it is not memoryless.
+            \item[2.] Time Invariance \\
+                Applying a delay either before or after the system results in the same output signal. Therefore, the system is time invariant.
+            \item[3.] Linearity \\ 
+                Taking the input signal $ax[n]$, we have the output signal $ax[4n+1] = ay[n]$. \\
+                Taking the input signal $x_{1}[n]+x_{2}[n]$, we have the output signal $x_{1}[4n+1]+x_{2}[4n+1] = y_{1}+y_{2}$. \\
+                Therefore, the system is linear.
+            \item[4.] Causality \\
+                Since the system may anticipate its future, it is not causal.
+            \item[5.] Stability \\
+                foo
+        \end{enumerate}
+\end{enumerate}
+\section{}
+\setcounter{subsection}{1}
+\subsection{} The signal h[k] is non-zero only in the interval $-3 \leq k \leq 9$, so the signal h[-k] is non-zero in the interval $-9 \leq k \leq 3$, if we shift it $n$ units, we will have the interval $n-9 \leq k \leq n+3$. Therefore, $A = n-9$ and $B = n+3$.
+\setcounter{subsection}{8}
+\subsection{} Given the signal:
+\begin{equation*}
+h(t) = e^{2t}u(-t+4) + e^{-2t}u(t-5)
+\end{equation*}
+Find A and B such that
+\begin{equation*}
+h(t-\tau ) = \left\{ \begin{array}{cll}
+e^{-2(t-\tau )}&, & if \tau < A  \\
+0&, & if A < \tau < B \\
+e^{2(t-\tau )}&, & if \tau > B
+\end{array} \right.
+\end{equation*}
+The first part of the sum will be $0$ if $\tau < t-4$, while the second part of the sum will be $0$ if $\tau > t-5$. Therefore, we have that $A = t-5$ and $B = t-4$.
+\setcounter{subsection}{20}
+\subsection{} Given the signals:
+\begin{equation*}
+\left. \begin{array}{l}
+x[n] = {\alpha}^{n}u[n],  \\
+h[n] = {\beta}^{n}u[n],
+\end{array} \right\} \alpha \neq \beta
+\end{equation*}
+Calculate $y[n] = x[n]*h[n]$. By the definition of convolution, we have:
+\begin{equation*}
+y[n] = x[n]*h[n] = \sum_{k=-\infty}^{+\infty} x[k]h[n-k] = \beta^{n}\sum_{k=0}^{n} \left(\frac{\alpha}{\beta}\right)^{k},\textrm{ for }n \geq 0
+\end{equation*}
+\begin{equation*}
+\Rightarrow y[n] = \left(\frac{\beta^{n+1}-\alpha^{n+1}}{\beta-\alpha}\right)u[n],\textrm{ for }\alpha \neq \beta
+\end{equation*}
+\setcounter{subsection}{27}
+\subsection{}
+\begin{enumerate}
+\item[(a)]
+    Given the signal:
+    \begin{equation*}
+        h[n] = \left(\frac{1}{5}\right)^{n}u[n]
+    \end{equation*}
+    As the impulse response of a discrete-time LTI system, determine if this system is causal or stable. \\
+    The system is causal because $h[n]=0$ for $n<0$. It is stable as well because $\sum\limits_{n=0}^{+\infty} \left(\frac{1}{5}\right)^{n} = \frac{5}{4} < +\infty$.
+\item[(c)]
+    Given the signal:
+    \begin{equation*}
+        h[n] = \left(\frac{1}{2}\right)^{n}u[-n]
+    \end{equation*}
+    As the impulse response of a discrete-time LTI system, determine if this system is causal or stable. \\
+    The system is not causal because $h[n]=0$ for $n>0$.Also, it is not stable because $\sum\limits_{n=-\infty}^{0} = +\infty$.
+\item[(e)]
+    Given the signal:
+    \begin{equation*}
+        h[n] = \left(-\frac{1}{2}\right)^{n}u[n] + (1.01)^{n}u[n-1]
+    \end{equation*}
+    As the impulse response of a discrete-time LTI system, determine if this system is causal or stable. \\
+    The system is causal because $h[n]=0$ for $n<0$. Also, it is not stable because the second term tends to infinite as $n\to +\infty$.
+\item[(g)]
+    Given the signal:
+    \begin{equation*}
+        h[n] = n\left(\frac{1}{3}\right)^{n}u[n-1]
+    \end{equation*}
+    As the impulse response of a discrete-time LTI system, determine if this system is causal or stable. \\
+    The system is causal because $h[n]=0$ for $n<0$. Also, it is stable because  $\sum\limits_{n=-\infty}^{+\infty} |h[n]| = 1 < +\infty$.
+\end{enumerate}
+\end{document}

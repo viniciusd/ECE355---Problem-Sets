@@ -1,0 +1,108 @@
+%\documentclass[tikz,14pt,border=10pt]{standalone}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}              	% for blackboard bold, etc
+\usepackage{amsthm}                	% better theorem
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\renewcommand{\baselinestretch}{1.5} 
+
+
+\usepackage[all]{xy}
+%\usepackage{textcomp}
+%\usetikzlibrary{shapes,arrows}
+\usepackage{tikz}
+\usepackage{pgfplots} 
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+\tikzset{
+block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+tmp/.style  = {coordinate}, 
+sum/.style= {draw, fill=white, circle, node distance=1cm},
+input/.style = {coordinate},
+output/.style= {coordinate},
+pinstyle/.style = {pin edge={to-,thin,black}
+}
+}
+
+\title{ECE355 - Homework IV}
+\author{Dantas de Lima Melo, Vinícius \\ \small{1001879880}}
+\date{September 2014}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{section}{2}
+\section{}
+    \setcounter{subsection}{21}
+    \subsection{} Determine the Fourier series representations for the following signals.
+    \begin{enumerate}
+        \item[(a)]
+            \begin{equation*}
+                \left\{\begin{array}{rl}
+                    x(t)=t&\textrm{, } -1 < t < 1  \\
+                    x(t)= &x(t+2)
+                \end{array}\right.
+            \end{equation*}
+            We have that:
+            \begin{equation} \label{eq:1.23a1}
+                a_{k} = \frac{1}{T}\int_{-1}^{1} te^{-jkw_{0}t}dt 
+            \end{equation}
+            For $k = 0$:
+            \begin{equation*}
+                a_{0} = \frac{1}{T}\int_{-1}^{1}tdt = 0
+            \end{equation*}
+            For $k\neq 0$:
+            \begin{equation*}
+                \begin{array}{l}
+                    a_{k} = \frac{1}{2}\int_{-1}^{1} te^{-jk\pi t}dt \\
+                    \Rightarrow 2a_{k} = \frac{tj}{k\pi}e^{-jk\pi t}\biggl|_{t=-1}^{1} - \frac{j}{k\pi}\int_{-1}^{1}e^{-jk\pi t}dt \\                     \Rightarrow 2\pi kja_{k} = -e^{-jk\pi}-e^{jk\pi} + \int_{-1}^{1}e^{-jk\pi t}dt \\
+                    \Rightarrow 2\pi kja_{k} = -e^{-jk\pi}-e^{jk\pi} + \frac{j}{k\pi}e^{-jk\pi t}\biggl|_{t=-1}^{1} \\
+                    \Rightarrow 2\pi kja_{k} = -e^{-jk\pi}-e^{jk\pi} + \frac{j}{k\pi}e^{-jk\pi t}-\frac{j}{k\pi}e^{jk\pi t} \\
+                    \Rightarrow 2\pi kja_{k} = -e^{-jk\pi}(1-\frac{j}{k\pi})-e^{jk\pi}(1+\frac{j}{k\pi}) \\
+                    \Rightarrow 2\pi kja_{k} = [-cos(k\pi)+jsin(k\pi)](1-\frac{j}{k\pi})+[-cos(k\pi)-jsin(k\pi)](1+\frac{j}{k\pi}) \\
+                \end{array}
+            \end{equation*}
+            \begin{equation*}
+                \begin{array}{l}
+                    \Rightarrow 2\pi kja_{k} = 2cos(k\pi)-jsin(k\pi)(\frac{2j}{k\pi}) \\
+                     \Rightarrow \pi ka_{k} = -jcos(k\pi)-jsin(k\pi)(\frac{1}{k\pi}) \\
+                     \Rightarrow a_{k} = \frac{1}{\pi kj}[ cos(k\pi)+\frac{1}{k\pi}sin(k\pi)]\textrm{, for }k\neq 0 \\ 
+                \end{array}
+            \end{equation*}
+            
+        \item[(b)]
+            \begin{equation*}
+                \left\{\begin{array}{rl}
+                    x(t)=t+2&\textrm{, } -2 < t < 1  \\
+                    x(t)=1&\textrm{, } -1 < t < 1  \\
+                    x(t)=t-2&\textrm{, } 1 < t < 2  \\
+                    x(t)= &x(t+6)
+                \end{array}\right.
+            \end{equation*}
+            Using similar reasoning and symmetry, we have that $a_{0}=0$, and $a_{k} = \frac{3j}{2{\pi}^2k^2}[e^{jk\frac{2\pi}{3}}sin(k\frac{2\pi}{3})+2e^{jk\frac{\pi}{3}}sin(k\frac{\pi}{3})]$ otherwise.
+        \end{enumerate}
+    \subsection{} Given the Fourier series coefficients of the following continuous-time signals, which are periodic with period 4, determine the signal x(t).
+    \begin{enumerate}
+        \item[(a)] 
+        \begin{equation*}
+            \left\{\begin{array}{rl}
+                 x(t)=-\frac{1}{4}&\textrm{, } -0.5 < t < 2.5  \\
+                x(t)=\frac{3}{4}&\textrm{, } 2.5 < t < 3.5  \\
+                x(t)= &x(t+4)
+            \end{array}\right.
+        \end{equation*}
+        \item[(b)] 
+        \begin{equation*}
+            \left\{\begin{array}{rl}
+                 x(t)=0&\textrm{, } 0 < t < \frac{7}{4}  \\
+                x(t)=\frac{1}{2}&\textrm{, } \frac{7}{4} < t < \frac{11}{4}   \\
+                x(t)= &x(t+4)
+            \end{array}\right.
+        \end{equation*}
+    \end{enumerate}
+\end{document}
